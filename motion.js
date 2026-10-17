@@ -2,12 +2,45 @@
 (() => {
   const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)');
   const wideScreen = matchMedia('(min-width: 761px)');
+  const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
   const root = document.documentElement;
   const art = document.querySelector('.hero-art');
   const hero = document.querySelector('.hero');
   const targets = [...document.querySelectorAll('.section-top, .project, .honest-note, .services > .eyebrow, .service-row, .steps article, .contact')];
   let observer;
   let frame = 0;
+  let tiltFrame = 0;
+  let pointerX = 0;
+  let pointerY = 0;
+  function resetTilt() {
+    if (tiltFrame) cancelAnimationFrame(tiltFrame);
+    tiltFrame = 0;
+    art?.style.removeProperty('--tilt-x');
+    art?.style.removeProperty('--tilt-y');
+  }
+  function updateTilt() {
+    tiltFrame = 0;
+    if (!art || !hero || reduceMotion.matches || !wideScreen.matches || !finePointer.matches) return;
+    // Use the untransformed centre so rotation cannot feed back into cursor position.
+    const bounds = hero.getBoundingClientRect();
+    const centerX = bounds.left + art.offsetLeft + art.offsetWidth / 2;
+    const centerY = bounds.top + art.offsetTop + art.offsetHeight / 2;
+    const x = Math.max(-1, Math.min(1, (pointerX - centerX) / (art.offsetWidth / 2)));
+    const y = Math.max(-1, Math.min(1, (pointerY - centerY) / (art.offsetHeight / 2)));
+    art.style.setProperty('--tilt-x', (-y * 13).toFixed(2) + 'deg');
+    art.style.setProperty('--tilt-y', (x * 16).toFixed(2) + 'deg');
+  }
+  hero?.addEventListener('pointermove', event => {
+    if (event.pointerType === 'touch' || reduceMotion.matches || !wideScreen.matches || !finePointer.matches) return;
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+    if (!tiltFrame) tiltFrame = requestAnimationFrame(updateTilt);
+  }, {passive:true});
+  hero?.addEventListener('pointerleave', resetTilt);
+  hero?.addEventListener('pointercancel', resetTilt);
+  addEventListener('blur', resetTilt);
+  addEventListener('scroll', resetTilt, {passive:true});
+  finePointer.addEventListener('change', resetTilt);
   function updateScroll() {
     frame = 0;
     if (reduceMotion.matches) return;
@@ -22,6 +55,7 @@
     if (!frame && !reduceMotion.matches) frame = requestAnimationFrame(updateScroll);
   }
   function configureMotion() {
+    resetTilt();
     observer?.disconnect();
     if (frame) cancelAnimationFrame(frame);
     frame = 0;
