@@ -19,3 +19,51 @@ html{scroll-padding-top:100px}body{isolation:isolate;background:#0b0e1b}.ambient
 @media(max-width:760px){.hero-art{opacity:.3}}
 @media(prefers-reduced-motion:reduce){.hero-art{transform:rotate(-14deg)!important;transform-style:flat;transition:none!important}.hero-art:before{transform:none}.hero-art .orbit,.hero-art .art-label,.hero-art .art-spark{translate:none}.hero-art .art-core{transform:rotate(14deg)}}
 @media(min-width:1101px){.hero-art{right:70px}}
+/* Responsive layouts: readable content and comfortable touch controls. */
+html{-webkit-text-size-adjust:100%}
+.project,.steps article,.service-row>*{min-width:0}
+@media(min-width:761px) and (max-width:1100px){
+ .project-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+ .project:last-child{grid-column:1/-1;max-width:calc(50% - 11px)}
+ .steps{gap:16px}.steps article{padding:22px 18px}.steps h3{font-size:19px}
+ .hero h1{font-size:clamp(64px,8.6vw,86px)}
+ .contact{flex-wrap:wrap}.contact-button{min-height:48px}
+}
+@media(max-width:760px){
+ .nav{display:grid;grid-template-columns:1fr auto;grid-template-rows:44px 34px;height:auto;gap:3px 12px;padding:9px 14px 7px;top:8px}
+ .nav .brand{grid-column:1;grid-row:1;font-size:16px;white-space:nowrap;min-height:44px}
+ .nav nav{display:contents}
+ .nav nav>a:not(.nav-contact){display:flex;align-items:center;justify-content:center;grid-row:2;min-height:34px;font-size:12px;border-top:1px solid #ffffff12}
+ .nav nav>a:first-child{grid-column:1}.nav nav>a:nth-child(2){grid-column:2}
+ .nav-contact{grid-column:2;grid-row:1;display:flex;align-items:center;min-height:44px;font-size:11px;padding:10px 12px}
+ .nav-contact span{margin-left:8px}
+ html{scroll-padding-top:125px}
+ .hero{padding-top:35px;padding-bottom:34px}
+ .hero h1{font-size:clamp(32px,10vw,72px);letter-spacing:-1.8px;line-height:1.08;margin:27px 0 25px}
+ .hero h1 span{white-space:nowrap}
+ .hero .eyebrow{font-size:8px;letter-spacing:.5px;line-height:1.6}
+ .hero-art{width:220px;height:240px;right:-95px;top:52px;opacity:.18;pointer-events:none}
+ .hero-bottom p{font-size:15px;line-height:1.7;max-width:470px}
+ .round-link{min-height:48px;margin-top:20px;font-size:14px}.round{width:48px;height:48px}
+ .work{padding-top:34px}.section-top h2{font-size:clamp(25px,6.8vw,40px);line-height:1.2}
+ .section-note{font-size:13px;line-height:1.7}
+ .project-grid{gap:22px}.project{padding:12px;border-radius:20px}
+ .project-preview{height:300px}.project-title{gap:10px;margin-top:18px}.project-title h3{font-size:18px;line-height:1.3}
+ .project>p{font-size:14px}.tags{gap:6px}.tags span{font-size:10px;line-height:1.3}
+ .bot-preview{padding:22px 17px}.chat-bubble{font-size:12px}.outgoing{font-size:11px}.chat-options span{font-size:10px}
+ .studio-preview{padding:20px 18px}.studio-preview strong{font-size:37px}.sculpture{right:-45px}
+ .floating-tag{font-size:7px;letter-spacing:.7px;left:18px}
+ .service-row{grid-template-columns:20px minmax(0,1fr) 18px;gap:12px}
+ .service-row h3{font-size:clamp(19px,5.4vw,24px)}.service-row p{font-size:14px;line-height:1.7}
+ .steps{gap:16px}.steps article{padding:23px}.steps h3{font-size:20px;line-height:1.3}.steps p{font-size:14px}
+ .contact{padding:28px 21px;margin-bottom:28px}.contact h2{font-size:clamp(28px,7.7vw,46px);line-height:1.12;letter-spacing:-1px}
+ .contact p{font-size:14px}.contact-button{font-size:15px;min-height:52px;white-space:normal;gap:10px}.contact-button span{margin-left:0}
+ footer{gap:8px 18px;padding-bottom:max(24px,env(safe-area-inset-bottom))}footer a{min-height:44px;display:flex;align-items:center;font-size:12px}footer>span{line-height:1.7;font-size:11px}
+}
+@media(max-width:360px){
+ .wrap{width:calc(100% - 32px)}.nav{width:calc(100% - 20px);padding-inline:10px;gap:3px 8px}
+ .nav .brand{font-size:14px;gap:4px}.brand-icon{margin-right:1px}.nav-contact{padding-inline:10px;font-size:10px}
+ .hero .eyebrow{font-size:7px}.hero h1{letter-spacing:-1.6px}
+ .project-preview{height:285px}.project-title h3{font-size:16px}.project{padding:10px}.chat-caption{letter-spacing:.3px;font-size:6px}
+}
+@media(hover:none){.project:hover,.project:hover .project-preview{transform:none}}
